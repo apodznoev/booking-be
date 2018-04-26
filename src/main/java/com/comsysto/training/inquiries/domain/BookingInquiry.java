@@ -2,6 +2,9 @@ package com.comsysto.training.inquiries.domain;
 
 import java.util.List;
 
+import com.comsysto.training.inquiries.repositories.entities.Inquiry;
+import com.comsysto.training.inquiries.repositories.entities.ServicePackage;
+
 public class BookingInquiry {
     private List<ServicePackage> servicePackages;
     private List<Inquiry> pastInquiries;

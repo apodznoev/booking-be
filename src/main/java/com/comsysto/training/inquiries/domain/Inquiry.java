@@ -1,14 +1,10 @@
 package com.comsysto.training.inquiries.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Inquiry {
-
 
     private LocalDateTime date;
     private BigDecimal price;
@@ -37,4 +33,5 @@ public class Inquiry {
     public void setServicePackages(List<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
     }
+
 }

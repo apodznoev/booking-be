@@ -2,13 +2,16 @@ package com.comsysto.training.inquiries.controllers;
 
 import com.comsysto.training.inquiries.domain.BookingInquiry;
 import com.comsysto.training.inquiries.services.InquiryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/vin")
+@RequestMapping("/api")
 public class InquiryController {
 
     private final InquiryService inquiryService;
@@ -17,9 +20,26 @@ public class InquiryController {
         this.inquiryService = inquiryService;
     }
 
-    @GetMapping("/{vin}")
+    @GetMapping("/vin/{vin}")
     public BookingInquiry findByVin(@PathVariable String vin) {
         return inquiryService.findByVin(vin);
     }
+
+    @PostMapping("/inquiries/{vin}")
+    public ResponseEntity save(@PathVariable String vin,
+                               @RequestBody List<Map<String, String>> id) {
+
+        List<String> ids = id.stream()
+                .map(i -> i.get("id"))
+                .collect(Collectors.toList());
+
+        inquiryService.createInquiry(vin, ids);
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder.fromCurrentRequestUri()
+                        .build()
+                        .toUri())
+                .build();
+    }
+
 
 }
